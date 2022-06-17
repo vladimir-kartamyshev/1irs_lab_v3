@@ -21,6 +21,7 @@ class SearchPageTest(unittest.TestCase):
         self.search_page = SearchPage(self.driver)
         self.search_page.open()
 
+
     def tearDown(self) -> None:
         """Действия после теста"""
         # Выполняется после каждого теста!
