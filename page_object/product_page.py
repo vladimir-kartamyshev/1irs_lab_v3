@@ -5,6 +5,7 @@ from page_object.base_page import BasePage
 
 
 class ProductPage(BasePage):
+
     page_url = '/index.php?route=product/product&product_id='
 
     def open_product(self, product_id: str):
