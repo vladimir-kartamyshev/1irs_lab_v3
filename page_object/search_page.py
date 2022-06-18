@@ -4,6 +4,8 @@ from typing import List
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
 
 from page_object.base_page import BasePage
 
@@ -66,12 +68,11 @@ class SearchPage(BasePage):
         search_button_field_criteria = self.driver.find_element(By.ID, 'button-search')
         return search_button_field_criteria
 
-    def get_text_message_no_product_search_criteria(self) -> str:
-        """Получаем элемент сообщения - (нет товаров, которые соответствуют критериям поиска)"""
-        message_no_product_search_criteria = self.driver.find_element(
-            By.XPATH, '//p[contains(text(),"There is no product that matches the search criteria.")]'
-        )
-        return message_no_product_search_criteria.text
+    def assert_message_no_product_search_criteria(self) -> bool:
+        """Проверяем сообщение - (нет товаров, которые соответствуют критериям поиска)"""
+        WebDriverWait(self.driver,timeout=10).until(expected_conditions.presence_of_element_located((By.XPATH, '//p[contains(text(),"There is no product that matches the search criteria.")]')))
+        return True
+
 
     def get_checkbox_search_in_product_descriptions(self) -> WebElement:
         """Получаем элемент чекбокса search_in_product_descriptions """

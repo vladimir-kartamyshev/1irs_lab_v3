@@ -9,9 +9,8 @@ class SearchPageTest(unittest.TestCase):
 
     def setUp(self) -> None:
         """Действия до теста"""
-        self.product_apple = ProductInfo(name='Apple Cinema 30"', price=Decimal('110.00'))
-        self.product_sony = ProductInfo(name='Sony VAIO', price=Decimal('1202.00'))
-        self.message_not_product = 'There is no product that matches the search criteria.'
+        self.product_apple = [ProductInfo(name='Apple Cinema 30"', price=Decimal('110.00'))]
+        self.product_sony = [ProductInfo(name='Sony VAIO', price=Decimal('1202.00'))]
         self.product_hp = ProductInfo(name='HP LP3065', price=Decimal('122.00'))
         self.product_imac = ProductInfo(name='iMac', price=Decimal('122.00'))
         self.result_expected = []
@@ -33,17 +32,18 @@ class SearchPageTest(unittest.TestCase):
         """Поиск работает"""
         self.search_page.get_search_field_header().send_keys('apple')
         self.search_page.get_search_button_header().click()
-        self.assertIn(self.product_apple, self.search_page.get_search_results())
+        self.assertEqual(self.product_apple, self.search_page.get_search_results())
 
         self.search_page.get_search_field_header().clear()
         self.search_page.get_search_field_header().send_keys('sony')
         self.search_page.get_search_button_header().click()
-        self.assertIn(self.product_sony, self.search_page.get_search_results())
+        print(self.search_page.get_search_results())
+        self.assertEqual(self.product_sony, self.search_page.get_search_results())
 
         self.search_page.get_search_field_header().clear()
         self.search_page.get_search_field_header().send_keys('nokia')
         self.search_page.get_search_button_header().click()
-        self.assertEqual(self.message_not_product, self.search_page.get_text_message_no_product_search_criteria())
+        self.assertTrue(self.search_page.assert_message_no_product_search_criteria())
 
         self.search_page.get_search_field_criteria().clear()
         self.search_page.get_search_field_criteria().send_keys('stunning')
