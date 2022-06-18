@@ -12,11 +12,11 @@ class SearchPageTest(unittest.TestCase):
         self.product_apple = ProductInfo(name='Apple Cinema 30"', price=Decimal('110.00'))
         self.product_sony = ProductInfo(name='Sony VAIO', price=Decimal('1202.00'))
         self.message_not_product = 'There is no product that matches the search criteria.'
-        self.spisok_hp = {"name": 'HP LP3065', "price": '122.00'}
-        self.spisok_imac = {"name": 'iMac', "price": '122.00'}
         self.product_hp = ProductInfo(name='HP LP3065', price=Decimal('122.00'))
         self.product_imac = ProductInfo(name='iMac', price=Decimal('122.00'))
-        self.sdsd = self.product_hp.name
+        self.result_expected = []
+        self.result_expected.append(self.product_hp)
+        self.result_expected.append(self.product_imac)
         self.driver = WebDriverFactory.get_driver()
         self.search_page = SearchPage(self.driver)
         self.search_page.open()
@@ -44,3 +44,9 @@ class SearchPageTest(unittest.TestCase):
         self.search_page.get_search_field_header().send_keys('nokia')
         self.search_page.get_search_button_header().click()
         self.assertEqual(self.message_not_product, self.search_page.get_text_message_no_product_search_criteria())
+
+        self.search_page.get_search_field_criteria().clear()
+        self.search_page.get_search_field_criteria().send_keys('stunning')
+        self.search_page.get_checkbox_search_in_product_descriptions().click()
+        self.search_page.get_search_button_field_criteria().click()
+        self.assertEqual(self.result_expected, self.search_page.get_search_results())

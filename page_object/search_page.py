@@ -79,17 +79,13 @@ class SearchPage(BasePage):
         return checkbox_search_in_product_descriptions
 
     def get_search_results(self) -> List[ProductInfo]:
-        """Метод, который возвращает список моделей ProductInfo,
-        в том порядке, в каком они встречаются на странице."""
 
-        # Получаем все теги <div class="product-thumb ...">...</div>
-        # со всем содержимым.
         products_tags = self.driver.find_elements(By.CLASS_NAME, 'product-thumb')
 
         # Заводим пустой массив, куда будем накапливать информацию о продуктах.
         products: List[ProductInfo] = []
 
-        # Перебираем все найденные теги с классом product-layout
+        # Перебираем все найденные теги с классом product-thumb
         for product_div_tag in products_tags:
             # Внутри тега ищем тег <H4> — внутри него будет название продукта.
             name: str = product_div_tag.find_element(By.TAG_NAME, 'h4').text
