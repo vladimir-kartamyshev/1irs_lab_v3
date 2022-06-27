@@ -51,7 +51,7 @@ class ShoppingCartPage(BasePage):
     def click_button_remove(self):
         """Кликаем на кнопку удалить из корзины"""
         self.get_button_remove().click()
-        WebDriverWait(self.driver, timeout=5).until(expected_conditions.staleness_of(self.get_button_remove()))
+        WebDriverWait(self.driver, timeout=5).until(expected_conditions.invisibility_of_element(self.get_button_remove()))
 
     def get_message_cart_empty(self) -> WebElement:
         WebDriverWait(self.driver, timeout=5).until(expected_conditions.presence_of_element_located((By.XPATH, "//div[@id='content']//p[text()='Your shopping cart is empty!']")))
