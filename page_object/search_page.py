@@ -38,7 +38,7 @@ def extract_decimal_price(text: str) -> Decimal:
 @dataclass
 class ProductInfo:
     name: str
-    price: Decimal = None
+    price: Decimal
 
 
 class SearchPage(BasePage):
@@ -53,20 +53,44 @@ class SearchPage(BasePage):
         search_field_header = self.driver.find_element(By.NAME, 'search')
         return search_field_header
 
+    def enter_text_search_field_header(self, text: str):
+        """Пишем в поле поиска """
+        self.get_search_field_header().send_keys(text)
+
+    def clear_search_field_header(self):
+        """Очищаем поле поиска"""
+        self.get_search_field_header().clear()
+
     def get_search_button_header(self) -> WebElement:
         """Получаем элемент кнопки поиск в Header"""
         search_button_header = self.driver.find_element(By.XPATH, "//button[@class='btn btn-default btn-lg']")
         return search_button_header
+
+    def click_search_button_header(self):
+        """Жмем кнопку поиска"""
+        self.get_search_button_header().click()
 
     def get_search_field_criteria(self) -> WebElement:
         """Получаем элемент поле поиска Criteria"""
         search_field_criteria = self.driver.find_element(By.ID, 'input-search')
         return search_field_criteria
 
+    def enter_text_search_field_criteria(self, text: str):
+        """Вводим текст в поле поиска по критериям"""
+        self.get_search_field_criteria().send_keys(text)
+
+    def clear_search_field_criteria(self):
+        """Очищаем поле поиска по критериям"""
+        self.get_search_field_criteria().clear()
+
     def get_search_button_field_criteria(self) -> WebElement:
         """Получаем элемент кнопка поиска Criteria"""
         search_button_field_criteria = self.driver.find_element(By.ID, 'button-search')
         return search_button_field_criteria
+
+    def click_search_button_field_criteria(self):
+        """Жмем кнопку поиска по критериям"""
+        self.get_search_button_field_criteria().click()
 
     def assert_message_no_product_search_criteria(self) -> bool:
         """Проверяем сообщение - (нет товаров, которые соответствуют критериям поиска)"""
@@ -78,6 +102,10 @@ class SearchPage(BasePage):
         """Получаем элемент чекбокса search_in_product_descriptions """
         checkbox_search_in_product_descriptions = self.driver.find_element(By.XPATH, '//input[@name="description"]')
         return checkbox_search_in_product_descriptions
+
+    def click_checkbox_search_in_product_descriptions(self):
+        """Кликаем чекбокс search_in_product_descriptions"""
+        self.get_checkbox_search_in_product_descriptions().click()
 
     def get_search_results(self) -> List[ProductInfo]:
 

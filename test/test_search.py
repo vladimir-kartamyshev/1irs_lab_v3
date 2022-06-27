@@ -30,23 +30,22 @@ class SearchPageTest(unittest.TestCase):
 
     def test_search(self):
         """Поиск работает"""
-        self.search_page.get_search_field_header().send_keys('apple')
-        self.search_page.get_search_button_header().click()
+        self.search_page.enter_text_search_field_header('Apple')
+        self.search_page.click_search_button_header()
         self.assertEqual(self.product_apple, self.search_page.get_search_results())
 
-        self.search_page.get_search_field_header().clear()
-        self.search_page.get_search_field_header().send_keys('sony')
-        self.search_page.get_search_button_header().click()
-        print(self.search_page.get_search_results())
+        self.search_page.clear_search_field_header()
+        self.search_page.enter_text_search_field_header('sony')
+        self.search_page.click_search_button_header()
         self.assertEqual(self.product_sony, self.search_page.get_search_results())
 
-        self.search_page.get_search_field_header().clear()
-        self.search_page.get_search_field_header().send_keys('nokia')
-        self.search_page.get_search_button_header().click()
+        self.search_page.clear_search_field_header()
+        self.search_page.enter_text_search_field_header('nokia')
+        self.search_page.click_search_button_header()
         self.assertTrue(self.search_page.assert_message_no_product_search_criteria())
 
-        self.search_page.get_search_field_criteria().clear()
-        self.search_page.get_search_field_criteria().send_keys('stunning')
-        self.search_page.get_checkbox_search_in_product_descriptions().click()
-        self.search_page.get_search_button_field_criteria().click()
+        self.search_page.clear_search_field_criteria()
+        self.search_page.enter_text_search_field_criteria('stunning')
+        self.search_page.click_checkbox_search_in_product_descriptions()
+        self.search_page.click_search_button_field_criteria()
         self.assertEqual(self.result_expected, self.search_page.get_search_results())

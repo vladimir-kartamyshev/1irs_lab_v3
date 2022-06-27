@@ -1,8 +1,8 @@
 import unittest
 
-from page_object import addon_page
-from page_object.product_page import ProductPage
 
+from page_object.product_page import ProductPage
+from tools import tools
 
 from webdriver_factory import WebDriverFactory
 
@@ -23,15 +23,17 @@ class AddReviewTest(unittest.TestCase):
 
     def test_review(self):
         """Отзывы работают"""
-        self.product_page.get_tab_reviews().click()
-        self.product_page.get_button_reviews_continue().click()
-        self.product_page.assert_warning_message_rating()
+        self.product_page.click_tab_reviews()
+        self.product_page.click_button_reviews_continue()
+        self.assertTrue(self.product_page.assert_warning_message_rating())
         self.product_page.enter_text_field_your_name('John')
-        self.product_page.enter_text_field_your_review(addon_page.generate_random_string(24))
+        self.product_page.enter_text_field_your_review(tools.generate_random_string(24))
         self.product_page.click_rating_5()
-        self.product_page.get_button_reviews_continue().click()
-        self.product_page.assert_warning_message_symbol()
-        self.product_page.get_field_your_review().clear()
-        self.product_page.enter_text_field_your_review(addon_page.generate_random_string(26))
-        self.product_page.get_button_reviews_continue().click()
+        self.product_page.click_button_reviews_continue()
+        self.assertTrue(self.product_page.assert_warning_message_symbol())
+        self.product_page.clear_field_your_review()
+        self.product_page.enter_text_field_your_review(tools.generate_random_string(26))
+        self.product_page.click_button_reviews_continue()
+        self.assertTrue(self.product_page.assert_success_message_review())
+
 

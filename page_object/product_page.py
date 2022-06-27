@@ -68,24 +68,35 @@ class ProductPage(BasePage):
         tab_reviews = self.driver.find_element(By.XPATH, "//a[contains(text(), 'reviews')]")
         return tab_reviews
 
+    def click_tab_reviews(self):
+        """Кликаем на вкладку reviews"""
+        self.get_tab_reviews().click()
+
     def get_button_reviews_continue(self) -> WebElement:
         """Получаем элемент кнопки отправить отзыв"""
         button_reviews_continue = self.driver.find_element(By.ID, 'button-review')
         return button_reviews_continue
 
+    def click_button_reviews_continue(self):
+        """Кликаем на кнопку отправить отзыв"""
+        self.get_button_reviews_continue().click()
+
     def assert_warning_message_symbol(self) -> bool:
         """Проверяем предупреждение символы"""
-        WebDriverWait(self.driver, timeout=10).until(expected_conditions.presence_of_element_located((By.XPATH, "//div[text()=' Warning: Review Text must be between 25 and 1000 characters!']")))
+        WebDriverWait(self.driver, timeout=10).until(expected_conditions.presence_of_element_located(
+            (By.XPATH, "//div[text()=' Warning: Review Text must be between 25 and 1000 characters!']")))
         return True
 
     def assert_warning_message_rating(self) -> bool:
         """Проверяем предупреждение рейтинг"""
-        WebDriverWait(self.driver, timeout=10).until(expected_conditions.presence_of_element_located((By.XPATH, "//div[text()=' Warning: Please select a review rating!']")))
+        WebDriverWait(self.driver, timeout=10).until(expected_conditions.presence_of_element_located(
+            (By.XPATH, "//div[text()=' Warning: Please select a review rating!']")))
         return True
 
-    def assert_success_message(self) -> bool:
+    def assert_success_message_review(self) -> bool:
         """Проверяем success сообщение"""
-        WebDriverWait(self.driver, timeout=10).until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, '.alert.alert-success.alert-dismissible')))
+        WebDriverWait(self.driver, timeout=10).until(expected_conditions.presence_of_element_located(
+            (By.CSS_SELECTOR, '.alert.alert-success.alert-dismissible')))
         return True
 
     def get_field_your_name(self) -> WebElement:
@@ -102,6 +113,10 @@ class ProductPage(BasePage):
         """Ищем поле ввода отзыва"""
         field_your_review = self.driver.find_element(By.ID, 'input-review')
         return field_your_review
+
+    def clear_field_your_review(self):
+        """Очищаем содержимое поля ввода отзыва"""
+        self.get_field_your_review().clear()
 
     def enter_text_field_your_review(self, text: str):
         """Вводим текст в поле отзыв"""
@@ -123,3 +138,57 @@ class ProductPage(BasePage):
         field_your_review = self.get_field_your_review()
         field_your_review.clear()
 
+    def assert_success_message_comparison(self, product_name: str) -> bool:
+        """Проверяем сообщение о добавлении к сравнению"""
+        WebDriverWait(self.driver, timeout=10).until(expected_conditions.presence_of_element_located(
+            (By.XPATH, '//div[@class="alert alert-success alert-dismissible"]')))
+        success_message_comparison = self.driver.find_element(By.XPATH,
+                                                              '//div[@class="alert alert-success alert-dismissible"]').text
+        i = len(success_message_comparison)
+        cut_success_message_comparison = success_message_comparison[:i - 2]
+        if cut_success_message_comparison == f"Success: You have added {product_name} to your product comparison!":
+            return True
+
+    def get_compare_this_product_button(self) -> WebElement:
+        """Получаем кнопку добавить товар в сравнение"""
+        compare_this_product_button = self.driver.find_element(
+            By.XPATH, '//button[@data-original-title="Compare this Product"]')
+        return compare_this_product_button
+
+    def click_compare_this_product_button(self):
+        """Кликаем кнопку добавить товар в сравнение"""
+        self.get_compare_this_product_button().click()
+
+    def get_field_qty(self) -> WebElement:
+        """Получаем поле количество"""
+        field_qty = self.driver.find_element(By.ID, 'input-quantity')
+        return field_qty
+
+    def send_keys_field_qty(self, text):
+        """Печатаем в поле количество"""
+        self.get_field_qty().send_keys(text)
+
+    def clear_field_qty(self):
+        """Чистим поле количество"""
+        self.get_field_qty().clear()
+
+    def get_add_to_cart_button(self) -> WebElement:
+        """Получаем кнопку добавить в корзину"""
+        add_to_cart_button = self.driver.find_element(By.XPATH, "//button[@id='button-cart']")
+        return add_to_cart_button
+
+    def click_add_to_cart_button(self):
+        """Кликаем кнопку добавить в корзину"""
+        self.get_add_to_cart_button().click()
+
+    def assert_success_message_add_to_cart(self, product_name: str) -> bool:
+        """Проверяем сообщение о добавлении товара в корзину"""
+        WebDriverWait(self.driver, timeout=10).until(expected_conditions.presence_of_element_located(
+            (By.XPATH, '//div[@class="alert alert-success alert-dismissible"]')))
+        success_message_comparison = self.driver.find_element(By.XPATH,
+                                                              '//div[@class="alert alert-success alert-dismissible"]').text
+        i = len(success_message_comparison)
+        cut_success_message_comparison = success_message_comparison[:i - 2]
+
+        if cut_success_message_comparison == f"Success: You have added {product_name} to your shopping cart!":
+            return True
