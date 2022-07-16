@@ -1,6 +1,6 @@
 # 1irs_lab
 
-###Задание No 1. Тестирование страницы продукта
+#Задание No 1. Тестирование страницы продукта
 Открыть страницу http://54.183.112.233/index.php?route=product/product&product_id=42 Убедиться, что присутствует информация:
 Название:Apple Cinema 30"
 Бренд:Apple
@@ -9,7 +9,7 @@ ProductCode:Product 15
 Описание содержит предложение
 “The30-inch Apple Cinema HD Display delivers anamazing 2560 x 1600 pixel”
 
-##Задание No 2. Тестирование поиска
+#Задание No 2. Тестирование поиска
 Открыть страницу
 http://54.183.112.233/index.php?route=product/search
 В поле поиска ввести “apple”, нажать кнопку “Поиск.”
@@ -21,7 +21,7 @@ http://54.183.112.233/index.php?route=product/search
 В поле “Search Criteria” ввести “stunning”, выбрать опцию “Search in product descriptions” и нажать кнопку “Search”
 В результатах поиска два продукта: “HPLP3065”, “iMac”.
 
-##Задание No3.Тестирование добавление отзыва на продукт
+#Задание No3.Тестирование добавление отзыва на продукт
 Открыть страницу
 http://54.183.112.233/index.php?route=product/product&product_id=42
 Открыть вкладку Reviews.
@@ -31,7 +31,7 @@ http://54.183.112.233/index.php?route=product/product&product_id=42
 Присутствует предупреждение “Warning: Review Text must be between 25 and 1000characters!” 
 Ввести в поле Your Review текст больше 25 символов. Нажать Continue.Присутствует подтверждение: “Thank you for your review. It has been submitted to the webmaster for approval.”
 
-##Задание No 4. Тестирование сравнения продуктов
+#Задание No 4. Тестирование сравнения продуктов
 Открыть страницу
 http://54.183.112.233/index.php?route=product/product&product_id=42
 Нажать кнопку “Compare this Product” 
@@ -44,7 +44,7 @@ http://54.183.112.233/index.php?route=product/product&product_id=33
 Удалить первый и второй товар из сравнения
 На странице надпись “You have not any products to compare.”
 
-##Задание No 5. Добавление продуктов в корзину
+#Задание No 5. Добавление продуктов в корзину
 Открыть страницу
 http://54.183.112.233/index.php?route=product/product&product_id=33
 В поле Qty ввести 2.
